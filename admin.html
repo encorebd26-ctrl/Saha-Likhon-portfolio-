@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Admin</title>
+<style>:root{color-scheme:dark}*{box-sizing:border-box}body{font:15px/1.5 system-ui,sans-serif;background:#070a18;color:#f4f6ff;padding:16px;max-width:760px;margin:auto}
+h1{font-size:22px}h2{font-size:17px;margin:26px 0 8px;color:#9b8cff}.box{background:#0d1230;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:12px;color:#a7aecb;margin:8px 0 3px}input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #2a3270;background:#070a18;color:#f4f6ff;font:inherit}
+button{padding:10px 16px;border-radius:999px;border:0;background:linear-gradient(135deg,#2e8bff,#9b5cff);color:#fff;font:600 14px system-ui;cursor:pointer;margin:6px 6px 4px 0}button.g{background:#1a2150;border:1px solid #2a3270}button.d{background:#6b1f33}
+#msg{position:fixed;left:16px;right:16px;bottom:16px;background:#0d1230;border:1px solid #2e8bff;border-radius:12px;padding:12px;display:none;z-index:5}
+.th{display:flex;flex-wrap:wrap;gap:10px}.th div{width:110px}.th img{width:110px;height:110px;object-fit:cover;border-radius:10px;display:block}.th button{width:100%;margin:4px 0}
+</style></head><body>
+<div id="login"><h1>Admin login</h1><div class="box"><label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><button id="go">Log in</button></div></div>
+<div id="app" hidden><h1>Edit website</h1><button id="save">Save changes</button><button class="g" id="out">Log out</button><div id="form"></div><button id="save2">Save changes</button><div style="height:70px"></div></div>
+<div id="msg"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+var U='https://fdcwcqxqicqvnxbjlfot.supabase.co',K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZkY3djcXhxaWNxdm54YmpsZm90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4ODE3ODksImV4cCI6MjEwODQ1Nzc4OX0.cDL71cZ5v5sPAV7ZnHdwyVRMbJUi8kt89IrUneIzGGQ',sb=supabase.createClient(U,K),D={},$=function(s){return document.querySelector(s)};
+var DEF={location:'Sherpur, Bangladesh 🇧🇩',role:'Student, aspiring web developer, and AI & technology enthusiast.',role_bn:'শিক্ষার্থী, ভবিষ্যৎ ওয়েব ডেভেলপার এবং এআই ও প্রযুক্তি অনুরাগী।',
+intro:'Hi, I’m Rakesh Saha Likhon, a student from Bangladesh who loves exploring AI, technology, and the digital world. I’m passionate about learning new things, building creative projects, and using technology to turn ideas into reality. Besides tech, I enjoy cycling and discovering new possibilities.',
+intro_bn:'হ্যালো, আমি রাকেশ সাহা লিখন, বাংলাদেশের একজন শিক্ষার্থী। এআই, প্রযুক্তি আর ডিজিটাল দুনিয়া ঘুরে দেখতে আমার খুব ভালো লাগে। নতুন কিছু শিখতে, সৃজনশীল প্রজেক্ট বানাতে এবং প্রযুক্তি দিয়ে ভাবনাকে বাস্তবে রূপ দিতে আমি আগ্রহী। প্রযুক্তির বাইরে আমি সাইকেল চালাতে এবং নতুন সম্ভাবনা খুঁজতে ভালোবাসি।',
+skills:['AI Tools','Technology Exploration','HTML','Supabase','Vercel','GitHub','Problem Solving','Cycling','Creative Thinking','Digital Branding'],
+projects:[{title:'Ishwar Moni Kutir',desc:'A temple website with religious information, a photo gallery, and digital experiences around Hindu festivals.',desc_bn:'ধর্মীয় তথ্য, ছবির গ্যালারি এবং হিন্দু উৎসবকেন্দ্রিক ডিজিটাল অভিজ্ঞতা নিয়ে একটি মন্দিরের ওয়েবসাইট।',link:'https://ishwarmonikuthir.vercel.app',image:''}],
+education:[{t:'Higher Secondary Certificate (HSC), Batch 27',d:'Hazi Nurul Haque Nonni Poragao Moitry College\nResult: coming soon',t_bn:'উচ্চ মাধ্যমিক সার্টিফিকেট (এইচএসসি), ২৭ ব্যাচ',d_bn:'Hazi Nurul Haque Nonni Poragao Moitry College\nফলাফল: শীঘ্রই আসছে'},
+{t:'Secondary School Certificate (SSC)',d:'Taraganj Govt Pilot High School\nGPA 5.00 out of 5.00',t_bn:'মাধ্যমিক স্কুল সার্টিফিকেট (এসএসসি)',d_bn:'Taraganj Govt Pilot High School\nজিপিএ ৫.০০ (৫.০০ এর মধ্যে)'},
+{t:'Primary School Certificate (PSC)',d:'Gorkanda Govt Primary School\nGPA 4.83 out of 5.00',t_bn:'প্রাথমিক শিক্ষা সমাপনী (পিএসসি)',d_bn:'Gorkanda Govt Primary School\nজিপিএ ৪.৮৩ (৫.০০ এর মধ্যে)'},
+{t:'Self-learning',d:'Web development, AI tools, and technology',t_bn:'নিজে নিজে শেখা',d_bn:'ওয়েব ডেভেলপমেন্ট, এআই টুল ও প্রযুক্তি'},
+{t:'Practical experience',d:'Website projects and an e-commerce business',t_bn:'ব্যবহারিক অভিজ্ঞতা',d_bn:'ওয়েবসাইট প্রজেক্ট ও একটি ই-কমার্স ব্যবসা'}],
+contact:{email:'lipisaha854@gmail.com',instagram:'saha.sync',facebook:'https://facebook.com/saha006',github:'',whatsapp:''},gallery:[]};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function msg(t,e){var m=$('#msg');m.textContent=t;m.style.display='block';m.style.borderColor=e?'#ff5c7a':'#2e8bff';clearTimeout(msg.t);msg.t=setTimeout(function(){m.style.display='none'},4500)}
+function get(p){return p.split('.').reduce(function(o,k){return o&&o[k]},D)}
+function set(p,v){var a=p.split('.'),o=D;for(var i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
+function F(p,l,t){var v=get(p);v=v==null?'':v;var a=' data-p="'+p+'"';return '<label>'+l+'</label>'+(t?'<textarea rows="4"'+a+'>'+esc(v)+'</textarea>':'<input'+a+' value="'+esc(v)+'">')}
+function draw(){var h='<h2>Basic</h2><div class="box">'+F('location','Location')+F('role','Role (English)')+F('role_bn','Role (Bangla)')+F('intro','Intro (English)',1)+F('intro_bn','Intro (Bangla)',1)+'</div>';
+h+='<h2>Skills</h2><div class="box">'+F('skills_txt','Skills, separated by commas',1)+'</div><h2>Projects</h2>';
+D.projects.forEach(function(p,i){var k='projects.'+i+'.';h+='<div class="box">'+F(k+'title','Title')+F(k+'desc','Description (English)',1)+F(k+'desc_bn','Description (Bangla)',1)+F(k+'link','Website link')+F(k+'image','Screenshot URL')+'<label>Upload screenshot</label><input type="file" accept="image/*" data-up="'+k+'image"><button class="d" data-del="projects.'+i+'">Delete project</button></div>'});
+h+='<button class="g" data-add="projects">+ Add project</button><h2>Education and experience</h2>';
+D.education.forEach(function(p,i){var k='education.'+i+'.';h+='<div class="box">'+F(k+'t','Title (English)')+F(k+'d','Details (English)',1)+F(k+'t_bn','Title (Bangla)')+F(k+'d_bn','Details (Bangla)',1)+'<button class="d" data-del="education.'+i+'">Delete</button></div>'});
+h+='<button class="g" data-add="education">+ Add item</button><h2>Contact links</h2><div class="box">'+F('contact.email','Email')+F('contact.instagram','Instagram username')+F('contact.facebook','Facebook link')+F('contact.github','GitHub link')+F('contact.whatsapp','WhatsApp number with country code, e.g. 8801XXXXXXXXX')+'</div>';
+h+='<h2>Photo gallery</h2><div class="box"><div class="th">'+D.gallery.map(function(u,i){return '<div><img src="'+esc(u)+'" alt=""><button class="d" data-delg="'+i+'">Delete</button></div>'}).join('')+'</div><label>Add photos</label><input type="file" accept="image/*" multiple data-upg="1"></div>';
+$('#form').innerHTML=h}
+function shrink(f){return new Promise(function(res){var im=new Image(),u=URL.createObjectURL(f);im.onload=function(){var s=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(function(b){res(b||f)},'image/jpeg',.82)};im.onerror=function(){res(f)};im.src=u})}
+function up(f){return shrink(f).then(function(b){var n='uploads/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';return sb.storage.from('site').upload(n,b,{contentType:'image/jpeg',cacheControl:'31536000'}).then(function(r){if(r.error)throw r.error;return sb.storage.from('site').getPublicUrl(n).data.publicUrl})})}
+function rm(u){var p=(u||'').split('/object/public/site/')[1];if(p)sb.storage.from('site').remove([p])}
+var f=$('#form');
+f.addEventListener('input',function(e){if(e.target.dataset.p)set(e.target.dataset.p,e.target.value)});
+f.addEventListener('change',function(e){var t=e.target,fs=t.files;if(!fs||!fs.length)return;msg('Uploading...');
+if(t.dataset.up){up(fs[0]).then(function(u){set(t.dataset.up,u);draw();msg('Uploaded. Press Save changes.')}).catch(function(x){msg(x.message,1)})}
+else if(t.dataset.upg){Promise.all([].map.call(fs,up)).then(function(us){D.gallery=D.gallery.concat(us);draw();msg('Uploaded. Press Save changes.')}).catch(function(x){msg(x.message,1)})}});
+f.addEventListener('click',function(e){var t=e.target.dataset;if(t.add){D[t.add].push(t.add==='projects'?{title:'',desc:'',desc_bn:'',link:'',image:''}:{t:'',d:'',t_bn:'',d_bn:''});draw()}
+else if(t.del){var a=t.del.split('.');if(confirm('Delete this?')){D[a[0]].splice(+a[1],1);draw()}}
+else if(t.delg){if(confirm('Delete this photo?')){rm(D.gallery[+t.delg]);D.gallery.splice(+t.delg,1);draw();msg('Removed. Press Save changes.')}}});
+function save(){D.skills=(D.skills_txt||'').split(',').map(function(s){return s.trim()}).filter(Boolean);var o=Object.assign({},D);delete o.skills_txt;
+sb.from('site_content').update({data:o,updated_at:new Date().toISOString()}).eq('id',1).select().then(function(r){if(r.error)msg(r.error.message,1);else if(!r.data||!r.data.length)msg('Not saved. Log in again.',1);else msg('Saved! Your website is updated.')})}
+$('#save').onclick=$('#save2').onclick=save;
+function start(){$('#login').hidden=true;$('#app').hidden=false;sb.from('site_content').select('data').eq('id',1).single().then(function(r){var d=(r.data&&r.data.data)||{};D=Object.assign({},DEF,d);D.contact=Object.assign({},DEF.contact,d.contact);D.skills_txt=(D.skills||[]).join(', ');draw()})}
+$('#go').onclick=function(){sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value}).then(function(r){if(r.error)msg(r.error.message,1);else start()})};
+$('#out').onclick=function(){sb.auth.signOut().then(function(){location.reload()})};
+sb.auth.getSession().then(function(r){if(r.data&&r.data.session)start()});
+</script></body></html>
