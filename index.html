@@ -117,6 +117,7 @@ html[data-theme=light] .glass{box-shadow:0 10px 30px rgba(40,50,120,.08)}
 .contact{gap:14px}.cform{max-width:620px;padding:28px}
 footer{padding:44px 5vw 52px;font-size:14px}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+.pinfo h3{font-size:1.1rem;font-weight:600;margin-bottom:20px}.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px 28px}.pi span{display:block;font-size:12px;color:var(--mute);margin-bottom:2px}.pi b{font-weight:600;font-size:15px}
 </style>
 </head>
 <body>
@@ -135,6 +136,7 @@ footer{padding:44px 5vw 52px;font-size:14px}
 <div class="glass"><p id="r-intro" data-bn="হ্যালো, আমি রাকেশ সাহা লিখন, বাংলাদেশের একজন শিক্ষার্থী। এআই, প্রযুক্তি আর ডিজিটাল দুনিয়া ঘুরে দেখতে আমার খুব ভালো লাগে। নতুন কিছু শিখতে, সৃজনশীল প্রজেক্ট বানাতে এবং প্রযুক্তি দিয়ে ভাবনাকে বাস্তবে রূপ দিতে আমি আগ্রহী। প্রযুক্তির বাইরে আমি সাইকেল চালাতে এবং নতুন সম্ভাবনা খুঁজতে ভালোবাসি।">Hi, I’m Rakesh Saha Likhon, a student from Bangladesh who loves exploring AI, technology, and the digital world. I’m passionate about learning new things, building creative projects, and using technology to turn ideas into reality. Besides tech, I enjoy cycling and discovering new possibilities.</p></div>
 <div class="glass facts"><p data-bn="<b>অবস্থান</b><br>শেরপুর, বাংলাদেশ"><b>Location</b><br>Sherpur, Bangladesh</p><br><p data-bn="<b>ভাষা</b><br>বাংলা, ইংরেজি, হিন্দি"><b>Languages</b><br>Bangla, English, Hindi</p><br><p data-bn="<b>স্ক্রিনের বাইরে</b><br>সাইকেল চালানো"><b>Off screen</b><br>Cycling</p></div>
 </div>
+<div class="glass pinfo" id="r-pinfo" style="margin-top:20px"></div>
 </section>
 
 <section id="skills">
@@ -218,7 +220,16 @@ function nl(s){return esc(s).replace(/\n/g,'<br>')}
 function ba(en,bn){return bn?' data-bn="'+esc(nl(bn))+'"':''}
 function host(u){try{return new URL(u).host}catch(e){return ''}}
 function put(el,en,bn){if(!el)return;el.setAttribute('data-bn',bn||en);el.dataset.en=en;el.innerHTML=document.documentElement.lang==='bn'?(bn||en):en}
-function render(d){
+var MN=['January','February','March','April','May','June','July','August','September','October','November','December'],MB=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+function bd(n){return String(n).replace(/\d/g,function(c){return '০১২৩৪৫৬৭৮৯'.charAt(c)})}
+var PD=[['Full name','পূর্ণ নাম','Rakesh Saha Likhon','রাকেশ সাহা লিখন'],['Birthplace','জন্মস্থান','Bhaluka, Mymensingh','ভালুকা, ময়মনসিংহ'],['Lives in','বর্তমান অবস্থান','Sherpur, Bangladesh','শেরপুর, বাংলাদেশ'],['Nationality','জাতীয়তা','Bangladeshi','বাংলাদেশি'],['Languages','ভাষা','Bangla, English, Hindi','বাংলা, ইংরেজি, হিন্দি'],['Hobbies','শখ','Travelling, Cycling','ভ্রমণ, সাইকেল চালানো'],['Favourite subjects','প্রিয় বিষয়','Higher Math, ICT','উচ্চতর গণিত, আইসিটি'],['Blood group','রক্তের গ্রুপ','O+','ও পজিটিভ (O+)'],['Dream','স্বপ্ন','To become an engineer','প্রকৌশলী হওয়া'],['Favourite sports','প্রিয় খেলা','Football, Cricket','ফুটবল, ক্রিকেট'],['Favourite footballer','প্রিয় ফুটবলার','Lionel Messi','লিওনেল মেসি'],['Favourite cricketers','প্রিয় ক্রিকেটার','Liton Kumar Das, Virat Kohli, Babar Azam, Trent Boult, Mustafizur Rahman','লিটন কুমার দাস, বিরাট কোহলি, বাবর আজম, ট্রেন্ট বোল্ট, মুস্তাফিজুর রহমান'],['Favourite apps','প্রিয় অ্যাপ','Facebook, YouTube, Instagram','ফেসবুক, ইউটিউব, ইনস্টাগ্রাম']];
+function pit(l,lb,v,vb){return '<div class="pi"><span data-bn="'+esc(lb||l)+'">'+esc(l)+'</span><b data-bn="'+esc(vb||v)+'">'+esc(v)+'</b></div>'}
+function renderPI(d){var dob=d.dob===undefined?'2008-06-27':d.dob,list=d.personal||PD.map(function(a){return{l:a[0],l_bn:a[1],v:a[2],v_bn:a[3]}}),h='';
+if(dob){var p=dob.split('-'),y=+p[0],m=+p[1]-1,dd=+p[2];if(MN[m]){h+=pit('Born','জন্ম',dd+' '+MN[m]+' '+y,bd(dd)+' '+MB[m]+' '+bd(y));
+if(d.show_age!=='no'){var n=new Date(),a=n.getFullYear()-y-((n.getMonth()<m||(n.getMonth()===m&&n.getDate()<dd))?1:0);h+=pit('Age','বয়স',a+' years',bd(a)+' বছর')}}}
+list.forEach(function(i){h+=pit(i.l,i.l_bn,i.v,i.v_bn)});
+q('#r-pinfo').innerHTML='<h3 data-bn="ব্যক্তিগত তথ্য">Personal info</h3><div class="pgrid">'+h+'</div>';if(window.reLang)window.reLang()}
+function render(d){renderPI(d);
 if(d.location)put(q('#r-loc'),esc(d.location));
 if(d.role)put(q('#r-role'),nl(d.role),d.role_bn&&nl(d.role_bn));
 if(d.intro)put(q('#r-intro'),nl(d.intro),d.intro_bn&&nl(d.intro_bn));
@@ -234,7 +245,7 @@ if(c.github)h+='<a class="btn" href="'+esc(c.github)+'" target="_blank" rel="noo
 if(c.whatsapp)h+='<a class="btn" href="https://wa.me/'+esc(c.whatsapp.replace(/\D/g,''))+'" target="_blank" rel="noopener">WhatsApp</a>';
 if(h)q('#r-contact').innerHTML=h}
 if(window.reLang)window.reLang()}
-fetch(U+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:K,Authorization:'Bearer '+K},cache:'no-store'}).then(function(r){return r.json()}).then(function(r){var d=r&&r[0]&&r[0].data;if(d&&Object.keys(d).length)render(d)}).catch(function(){});
+renderPI({});fetch(U+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:K,Authorization:'Bearer '+K},cache:'no-store'}).then(function(r){return r.json()}).then(function(r){var d=r&&r[0]&&r[0].data;if(d&&Object.keys(d).length)render(d)}).catch(function(){});
 })();
 </script>
 <script>
