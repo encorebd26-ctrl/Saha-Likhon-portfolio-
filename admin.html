@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Admin</title>
-<style>:root{color-scheme:dark;--bg:#070a18;--card:#0e1330;--line:#232a5a;--mute:#9aa3c7;--blue:#2e8bff;--pur:#9b5cff}*{box-sizing:border-box}
+<style>:root{color-scheme:dark;--bg:#070a18;--card:#0e1330;--line:#232a5a;--mute:#9aa3c7;--blue:#2e8bff;--pur:#9b5cff}*{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(700px 400px at 90% -10%,rgba(155,92,255,.18),transparent 60%),var(--bg);color:#f4f6ff}
 .wrap{max-width:820px;margin:auto;padding:0 16px}
 .auth{min-height:100vh;display:grid;place-items:center;padding:16px}.authc{width:100%;max-width:400px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
@@ -62,11 +62,11 @@ else if(t.delg){if(confirm('Delete this photo?')){rm(D.gallery[+t.delg]);D.galle
 function save(){D.skills=(D.skills_txt||'').split(',').map(function(s){return s.trim()}).filter(Boolean);var o=Object.assign({},D);delete o.skills_txt;
 sb.from('site_content').update({data:o,updated_at:new Date().toISOString()}).eq('id',1).select().then(function(r){if(r.error)msg(r.error.message,1);else if(!r.data||!r.data.length)msg('Not saved. Log in again.',1);else{$('#dirty').hidden=true;msg('Saved! Your website is updated.')}})}
 $('#save').onclick=$('#save2').onclick=save;
-function start(){$('#login').hidden=true;$('#app').hidden=false;sb.from('site_content').select('data').eq('id',1).single().then(function(r){var d=(r.data&&r.data.data)||{};D=Object.assign({},DEF,d);D.contact=Object.assign({},DEF.contact,d.contact);D.skills_txt=(D.skills||[]).join(', ');draw()})}
+function start(){$('#login').hidden=true;$('#app').hidden=false;sb.from('site_content').select('data').eq('id',1).single().then(function(r){if(r.error)msg('Load error: '+r.error.message,1);var d=(r.data&&r.data.data)||{};D=Object.assign({},DEF,d);D.contact=Object.assign({},DEF.contact,d.contact);D.skills_txt=(D.skills||[]).join(', ');draw()})}
 $('#go').onclick=function(){sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value}).then(function(r){if(r.error)msg(r.error.message+' | status '+r.error.status+' | code '+(r.error.code||'-')+' | email: '+$('#em').value.trim(),1);else start()})};
 $('#out').onclick=function(){sb.auth.signOut().then(function(){location.reload()})};
 sb.auth.getSession().then(function(r){if(r.data&&r.data.session)start()});
 var dirty=function(){$('#dirty').hidden=false};f.addEventListener('input',dirty);f.addEventListener('change',dirty);window.addEventListener('beforeunload',function(e){if(!$('#dirty').hidden){e.preventDefault();e.returnValue=''}});
 $('#sp').onchange=function(){$('#pw').type=this.checked?'text':'password'};$('#pw').addEventListener('keydown',function(e){if(e.key==='Enter')$('#go').click()});
-fetch(U+'/auth/v1/settings',{headers:{apikey:K}}).then(function(r){return r.json()}).then(function(s){$('#diag').textContent='Build 5 | project '+U.replace('https://','').split('.')[0]+' | email login: '+(s.external&&s.external.email?'ON':'OFF')+' | sign-ups: '+(s.disable_signup?'closed':'open')}).catch(function(e){$('#diag').textContent='Build 5 | cannot reach Supabase: '+e.message});
+fetch(U+'/auth/v1/settings',{headers:{apikey:K}}).then(function(r){return r.json()}).then(function(s){$('#diag').textContent='Build 6 | project '+U.replace('https://','').split('.')[0]+' | email login: '+(s.external&&s.external.email?'ON':'OFF')+' | sign-ups: '+(s.disable_signup?'closed':'open')}).catch(function(e){$('#diag').textContent='Build 6 | cannot reach Supabase: '+e.message});
 </script></body></html>
